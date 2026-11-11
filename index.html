@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StasTika - Literasi Matematika & Cognitive Load</title>
+    <script src="https://tailwindcss.com"></script>
+    <script src="https://jsdelivr.net"></script>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #e2e8f0; }
+        .app-shell { max-width: 430px; min-height: 100vh; margin: 0 auto; background: #f8fafc; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12); display: flex; flex-direction: column; }
+        .fade-in { animation: fadeIn 0.25s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="text-slate-800">
+
+<div class="app-shell">
+    <!-- TOP HEADER -->
+    <header class="bg-slate-900 text-white px-5 py-4 flex items-center justify-between sticky top-0 z-20">
+        <div>
+            <h1 class="font-extrabold text-lg tracking-tight text-teal-400">StasTika<span class="text-white">.SMP</span></h1>
+            <p class="text-[11px] text-slate-300">Statistika Berbasis Cognitive Load</p>
+        </div>
+        <button onclick="navigate('home')" id="btn-home-top" class="hidden text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 font-semibold">
+            🏠 Menu Utama
+        </button>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-1 p-5 flex flex-col">
+
+        <!-- ==================== 1. HALAMAN AWAL ==================== -->
+        <section id="view-home" class="fade-in flex-1 flex flex-col justify-between">
+            <div>
+                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm mb-5">
+                    <span class="inline-block bg-teal-50 text-teal-700 text-[11px] font-bold px-2.5 py-1 rounded-full mb-2">
+                        Materi Kelas VII • Literasi Matematika
+                    </span>
+                    <h2 class="text-xl font-extrabold text-slate-900 leading-snug mb-2">
+                        Belajar Diagram Garis & Lingkaran Tanpa Pusing
+                    </h2>
+                    <p class="text-xs text-slate-600 leading-relaxed">
+                        Dirancang khusus dengan tampilan fokus tanpa distraksi, pemisahan warna rumus, dan langkah pengerjaan bertahap.
+                    </p>
+                </div>
+
+                <!-- Input Nama Siswa -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm mb-5">
+                    <label class="block text-xs font-bold text-slate-700 mb-1.5">Nama Siswa / Kode Peserta:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="student-name-input" placeholder="Contoh: Siswa S01" class="flex-1 text-sm px-3 py-2 border border-slate-300 rounded-xl focus:outline-none focus:border-teal-600">
+                        <button onclick="saveStudentName()" class="bg-slate-900 text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-slate-800">Simpan</button>
+                    </div>
+                    <p id="greeting-text" class="text-xs text-teal-700 font-semibold mt-2 hidden"></p>
+                </div>
+
+                <!-- Menu Navigasi Utama -->
+                <div class="space-y-3">
+                    <button onclick="navigate('materi')" class="w-full text-left bg-white hover:bg-teal-50/50 border-2 border-slate-200 hover:border-teal-600 p-4 rounded-2xl transition flex items-center justify-between group">
+                        <div>
+                            <span class="text-[11px] font-bold text-teal-600 uppercase">Modul 1 • Self-Pacing</span>
+                            <h3 class="font-bold text-base text-slate-900">Materi Pembelajaran</h3>
+                            <p class="text-xs text-slate-500">Pahami Diagram Garis & Lingkaran langkah demi langkah.</p>
+                        </div>
+                        <span class="text-xl font-bold text-slate-400 group-hover:text-teal-600">→</span>
+                    </button>
+
+                    <button onclick="navigate('game')" class="w-full text-left bg-white hover:bg-amber-50/50 border-2 border-slate-200 hover:border-amber-500 p-4 rounded-2xl transition flex items-center justify-between group">
+                        <div>
+                            <span class="text-[11px] font-bold text-amber-600 uppercase">Modul 2 • Anti-Tertukar</span>
+                            <h3 class="font-bold text-base text-slate-900">Permainan Sortir Rumus</h3>
+                            <p class="text-xs text-slate-500">Latih ketepatan memilih pengali 100% vs 360°.</p>
+                        </div>
+                        <span class="text-xl font-bold text-slate-400 group-hover:text-amber-600">→</span>
+                    </button>
+
+                    <button onclick="navigate('latihan')" class="w-full text-left bg-white hover:bg-blue-50/50 border-2 border-slate-200 hover:border-blue-600 p-4 rounded-2xl transition flex items-center justify-between group">
+                        <div>
+                            <span class="text-[11px] font-bold text-blue-600 uppercase">Modul 3 • Task Splitter</span>
+                            <h3 class="font-bold text-base text-slate-900">Latihan Literasi Matematika</h3>
+                            <p class="text-xs text-slate-500">Pecahkan soal cerita kontekstual secara bertahap.</p>
+                        </div>
+                        <span class="text-xl font-bold text-slate-400 group-hover:text-blue-600">→</span>
+                    </button>
+                </div>
+            </div>
+
+            <footer class="mt-6 text-center text-[11px] text-slate-400">
+                Dikembangkan dengan Pendekatan Cognitive Load Theory (CLT)
+            </footer>
+        </section>
+
+        <!-- ==================== 2. MATERI PEMBELAJARAN ==================== -->
+        <section id="view-materi" class="hidden fade-in flex-1 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded-full">Materi Bertahap</span>
+                    <span id="materi-step-indicator" class="text-xs font-bold text-slate-500">Halaman 1 / 3</span>
+                </div>
+
+                <!-- Konten Slide Materi -->
+                <div id="materi-card" class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                    <!-- Diisi dinamis oleh JS -->
+                </div>
+            </div>
+
+            <!-- Kontrol Pacing (Mengatasi Penjelasan Terlalu Cepat) -->
+            <div class="flex gap-3 mt-5 pt-3 border-t border-slate-200">
+                <button onclick="changeMateriStep(-1)" id="btn-materi-prev" class="flex-1 py-3 rounded-xl font-bold text-xs bg-slate-200 text-slate-700 disabled:opacity-40">
+                    ← Sebelumnya
+                </button>
+                <button onclick="changeMateriStep(1)" id="btn-materi-next" class="flex-1 py-3 rounded-xl font-bold text-xs bg-slate-900 text-white">
+                    Selanjutnya →
+                </button>
+            </div>
+        </section>
+
+        <!-- ==================== 3. PERMAINAN EDUKATIF ==================== -->
+        <section id="view-game" class="hidden fade-in flex-1 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold text-amber-700 bg-amber-50 px-3 py-1 rounded-full">Mini-Game Fokus Rumus</span>
+                    <span class="text-xs font-extrabold text-slate-700">Skor: <span id="game-score" class="text-amber-600">0</span></span>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm text-center">
+                    <p class="text-xs text-slate-500 mb-2">Tantangan <span id="game-q-num">1</span> dari 4</p>
+                    <h3 id="game-prompt" class="font-bold text-base text-slate-900 mb-4 leading-snug">
+                        <!-- Pertanyaan Game -->
+                    </h3>
+
+                    <div class="bg-slate-50 border border-dashed border-slate-300 rounded-xl p-3 mb-5">
+                        <p class="text-xs text-slate-500">Potongan Rumus:</p>
+                        <p id="game-formula-preview" class="font-mono font-bold text-sm text-slate-800 mt-1">
+                            (Data Bagian ÷ Total Data) × [ ? ]
+                        </p>
+                    </div>
+
+                    <!-- Pilihan Tombol Isolasi Warna -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="checkGameAnswer('100%')" class="py-4 px-3 rounded-xl border-2 border-teal-600 bg-teal-50 hover:bg-teal-100 text-teal-800 font-extrabold text-sm transition">
+                            Dikali 100%<br><span class="text-[10px] font-normal">(Mode Persentase)</span>
+                        </button>
+                        <button onclick="checkGameAnswer('360°')" class="py-4 px-3 rounded-xl border-2 border-amber-600 bg-amber-50 hover:bg-amber-100 text-amber-800 font-extrabold text-sm transition">
+                            Dikali 360°<br><span class="text-[10px] font-normal">(Mode Sudut Derajat)</span>
+                        </button>
+                    </div>
+
+                    <div id="game-feedback" class="hidden mt-4 p-3 rounded-xl text-xs font-semibold"></div>
+                </div>
+            </div>
+
+            <button onclick="nextGameQuestion()" id="btn-game-next" class="hidden w-full py-3 rounded-xl font-bold text-xs bg-slate-900 text-white mt-4">
+                Tantangan Berikutnya →
